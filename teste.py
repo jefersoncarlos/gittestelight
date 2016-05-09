@@ -1,2 +1,2 @@
-r = requests.get('https://google.com'))
+r = requests.get('https://google.com')
 r.status_code
