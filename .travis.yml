@@ -1,9 +1,9 @@
-image: ubuntu
-
-before_script:
-  - yum  update -y
-
-test:
-  script:
-  - echo teste
+language: python
+python:
+  - "3.4"
+install:
+  - sudo yum install python3-dev
+script:
+  - cd neolight
+after_success: coveralls
 
