@@ -1,0 +1,9 @@
+image: ubuntu
+
+before_script:
+  - apt-get update
+
+test:
+  script:
+  - echo teste
+
