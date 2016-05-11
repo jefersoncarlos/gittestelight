@@ -1,7 +1,7 @@
 image: ubuntu
 
 before_script:
-  - yum  update
+  - yum  update -y
 
 test:
   script:
