@@ -2,7 +2,7 @@ language: python
 python:
   - "3.4"
 install:
-  - sudo yum install python3-desudo: required
+  - apt-get install python3-desudo: required
 
 language: ruby
 
@@ -10,11 +10,7 @@ services:
   - docker
 
 before_install:
-- docker pull carlad/sinatra
-- docker run -d -p 127.0.0.1:80:4567 carlad/sinatra /bin/sh -c "cd /root/sinatra; bundle exec foreman start;"
-- docker ps -a
-- docker run carlad/sinatra /bin/sh -c "cd /root/sinatra; bundle exec rake test"
-
+- docker run -it ubuntu /bin/bash
 script:
 - bundle exec rake testv
 script:
