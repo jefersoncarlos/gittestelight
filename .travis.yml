@@ -1,15 +1,75 @@
-sudo: required
+ROOT=$(pwd)
+echo $ROOT
+#sudo apt-get update
+#sudo apt-get -y install wget
+#sudo apt-get -y install curl
+#cat /etc/issue
+#ls
+#python -V
+#sudo apt-get -y install g++
+#sudo apt-get -y install autoconf
+#sudo apt-get -y install make
+#sudo apt-get -y install libtool
+#sudo apt-get -y install zlib1g-dev
 
-language: ruby
 
-services:
-  - docker
+# python requiriments
+#sudo apt-get -y install python-setuptools
 
-before_install:
-- docker pull carlad/sinatra
-- docker run -d -p 127.0.0.1:80:4567 carlad/sinatra /bin/sh -c "cd /root/sinatra; bundle exec foreman start;"
-- docker ps -a
-- docker run carlad/sinatra /bin/sh -c "cd /root/sinatra; bundle exec rake test"
+# lbconverter requirements
+#sudo apt-get -y install imagemagick
+#sudo apt-get -y install libpng-dev
+##sudo apt-get -y install libjpeg-dev
+#sudo apt-get -y install libtiff-dev
+#sudo apt-get -y install libopenjpeg2
+#sudo apt-get -y install libgif-dev
+#sudo apt-get -y install libwebp-dev
 
-script:
-- bundle exec rake test
+# compile libs
+# catdoc
+cd /usr/local/lib
+sudo wget http://ftp.wagner.pp.ru/pub/catdoc/catdoc-0.94.2.tar.gz
+sudo tar -zxvf catdoc-0.94.2.tar.gz
+cd catdoc-0.94.2
+sudo ./configure
+sudo make
+sudo make install
+
+# leptonica
+cd /usr/local/lib
+sudo curl -O http://www.leptonica.com/source/leptonica-1.71.tar.gz
+sudo tar -zxvf leptonica-1.71.tar.gz
+cd  leptonica-1.71
+sudo ./autobuild
+sudo ./configure
+sudo make -j 4
+sudo make install
+
+# tesseract
+cd /usr/local/lib
+sudo curl -O http://tesseract-ocr.googlecode.com/files/tesseract-ocr-3.02.02.tar.gz
+
+sudo tar -zxvf tesseract-ocr-3.02.02.tar.gz
+cd /usr/local/lib/tesseract-ocr
+sudo ./autogen.sh
+sudo ./configure
+sudo make
+sudo make install
+sudo ldconfig
+
+#pacotes de idiomas
+cd /usr/local/lib/tesseract-ocr
+
+sudo curl -O http://tesseract-ocr.googlecode.com/files/tesseract-ocr-3.01.eng.tar.gz
+sudo tar -zxvf tesseract-ocr-3.01.eng.tar.gz
+
+sudo curl -O http://tesseract-ocr.googlecode.com/files/tesseract-ocr-3.02.por.tar.gz
+sudo tar -zxvf tesseract-ocr-3.02.por.tar.gz
+
+
+sudo cp /usr/local/lib/tesseract-ocr/tesseract-ocr/tessdata/eng.traineddata /usr/local/share/tessdata
+
+export TESSDATA_PREFIX=/usr/local/lib/tesseract-ocr/tesseract-ocr
+
+cd $ROOT
+
